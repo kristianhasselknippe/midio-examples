@@ -1,0 +1,52 @@
+import("std", Std)
+
+module Main {
+    instance(x: -203.4, y: 331.4, stableId: "c04a619b-7ffe-49cb-aa10-f10a37be79ae") readall_d9de3c root.Std.File.ReadAll { }
+    instance(x: 231.3, y: 424.0, stableId: "70b23d37-bae2-44a8-900d-b79f689e70db") split_c67962 root.Std.Strings.Split { }
+    instance(x: 1006.1, y: 355.9, stableId: "148ae83e-c773-41d2-a85c-cfcb58944e00") map_8ae791 root.Std.Iteration.Map { }
+    instance(x: 1897.9, y: 309.6, stableId: "ec5a97bc-1f7d-49fd-ba6f-c0d5d0f95027") log_555f24 root.Std.Std.Log { }
+    instance(x: 601.9, y: 467.1, stableId: "efaf9c46-9ae1-4fae-9ac2-dd9022615deb") slice_be11ed root.Std.List.Slice { }
+    instance(x: 1958.3, y: 497.7, stableId: "58a4d9c7-3945-4089-830c-fbb1244c966f") stringify_544386 root.Std.CSV.Stringify { }
+    instance(x: 2320.7, y: 370.7, stableId: "9a80b087-3cd0-47ce-af07-b75daccafa4b") log_f3b1bb root.Std.Std.Log { }
+    instance(x: 2624.7, y: 364.0, stableId: "adf98581-2ff7-4255-b4cc-6c2b30d3e015") writefile_1a39a6 root.Std.File.WriteAll { }
+    "../../midio_timeliste/midio_git_log.txt" -> readall_d9de3c.path
+    "\n" -> split_c67962.splitOn
+    readall_d9de3c.content -> split_c67962.string
+    readall_d9de3c.onDone -> map_8ae791.execute
+    func  {
+    in(x: 225.9166717529297, y: 243.9167327880859, name: "line") property(String) line_eab365
+    out(x: 1244.583267211914, y: 358.5833282470703, name: "items") property(Any) items_817bd6
+    instance(x: 428.6, y: 243.9, stableId: "3276a02f-fd59-4ec2-a846-dbffb3d57fcc") split_ee17e6 root.Std.Strings.Split { }
+    data_instance(x: 907.6, y: 243.9, stableId: "9019c531-bd41-4673-ac09-e2fe3764df1c") data_9edf3f  = { hash: hash, author: author, date: date, message: msg }
+    waypoint(x: 693.3, y: 243.9, stableId: "66fc9a63-793e-4b3b-8809-f9694e4c1e2d") wp_f523c0 = [0]
+    waypoint(x: 693.3, y: 290.4, stableId: "71b5e309-5c70-4cb8-9520-ed02d8153bd0") wp_01063b = [2]
+    waypoint(x: 695.3, y: 383.3, stableId: "5278dadc-2229-4ccd-8ab4-826e768632bf") wp_0c275b = [1]
+    waypoint(x: 693.3, y: 336.9, stableId: "663c4dcd-ee67-4b6c-a9ba-f2e0b855bb40") wp_3a9e2c = [3]
+    "-" -> split_ee17e6.splitOn
+    line_eab365 -> split_ee17e6.string
+    split_ee17e6.strings -> wp_f523c0
+    wp_f523c0 -> data_9edf3f.hash
+    split_ee17e6.strings -> wp_01063b
+    wp_01063b -> data_9edf3f.author
+    split_ee17e6.strings -> wp_0c275b
+    wp_0c275b -> data_9edf3f.date
+    split_ee17e6.strings -> wp_3a9e2c
+    wp_3a9e2c -> data_9edf3f.msg
+    data_9edf3f -> items_817bd6
+
+} -> map_8ae791.handler
+    map_8ae791.continue -> log_555f24.execute
+    map_8ae791.output_list -> log_555f24.input
+    split_c67962.strings -> slice_be11ed.list
+    0 -> slice_be11ed.start
+    20 -> slice_be11ed.end
+    slice_be11ed.slice -> map_8ae791.items
+    map_8ae791.output_list -> stringify_544386.csv
+    stringify_544386.string -> log_f3b1bb.input
+    log_555f24.continue -> log_f3b1bb.execute
+    log_f3b1bb.continue -> writefile_1a39a6.execute
+    "../../midio_timeliste/midio_git_log.csv" -> writefile_1a39a6.path
+    stringify_544386.string -> writefile_1a39a6.content
+
+
+}
